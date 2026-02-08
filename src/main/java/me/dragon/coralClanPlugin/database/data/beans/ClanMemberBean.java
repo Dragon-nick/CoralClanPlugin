@@ -12,6 +12,13 @@ public class ClanMemberBean {
 	private Roles role;
 	private ClanBean clanBean;
 
+	public static ClanMemberBean fromUUID(@NotNull final UUID uuid) {
+		final ClanMemberBean bean = new ClanMemberBean();
+		bean.setUuid(uuid);
+
+		return bean;
+	}
+
 	public static ClanMemberBean of(@NotNull final UUID uuid, @NotNull final Roles role,
 		@NotNull final Integer clanId) {
 		final ClanMemberBean bean = new ClanMemberBean();

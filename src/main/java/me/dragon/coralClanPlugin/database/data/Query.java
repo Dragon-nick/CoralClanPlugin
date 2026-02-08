@@ -20,6 +20,10 @@ public enum Query {
 		FROM clans
 		WHERE name = ? OR tag = ?
 		"""),
+	DELETE_CLAN("""
+		DELETE FROM clans
+		WHERE id = ?
+		"""),
 
 	/*** Clan Members **/
 	CREATE_CLAN_MEMBER("""
@@ -27,7 +31,7 @@ public enum Query {
 		VALUES (?, ?, ?)
 		"""),
 	READ_CLAN_MEMBER("""
-		SELECT role, c.name, c.tag
+		SELECT role, c.id, c.name, c.tag
 		FROM clan_members
 		RIGHT JOIN clan_mc.clans c on c.id = clan_members.clan_id
 		WHERE uuid = ?

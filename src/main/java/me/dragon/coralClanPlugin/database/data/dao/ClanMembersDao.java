@@ -49,6 +49,7 @@ public class ClanMembersDao extends AbstractGenericDao<ClanMemberBean> {
 			bean.setRole(Roles.convert(getString(pResultSet, "role")));
 
 			final ClanBean clanBean = new ClanBean();
+			clanBean.setId(getInt(pResultSet, "id"));
 			clanBean.setName(getString(pResultSet, "name"));
 			clanBean.setTag(getString(pResultSet, "tag"));
 
