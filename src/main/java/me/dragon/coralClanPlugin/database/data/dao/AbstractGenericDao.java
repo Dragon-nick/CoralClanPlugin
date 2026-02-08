@@ -49,7 +49,6 @@ public abstract class AbstractGenericDao<B> {
 			pResultSet.getInt(pColumnName);
 	}
 
-
 	protected static void setParametersOnStatement(
 		@NotNull final PreparedStatement statement,
 		@Nullable final Object... pParameters
@@ -60,6 +59,7 @@ public abstract class AbstractGenericDao<B> {
 				switch (parameter) {
 					case null -> statement.setNull(index, Types.NULL);
 					case final String value -> statement.setString(index, value);
+					case final Enum<?> value -> statement.setString(index, value.name());
 					default -> statement.setString(index, parameter.toString());
 				}
 

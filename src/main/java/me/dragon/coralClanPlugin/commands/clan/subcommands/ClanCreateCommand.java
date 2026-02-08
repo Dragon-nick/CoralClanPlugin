@@ -3,16 +3,20 @@ package me.dragon.coralClanPlugin.commands.clan.subcommands;
 import me.dragon.coralClanPlugin.CoralClanPlugin;
 import me.dragon.coralClanPlugin.commands.interfaces.ISubCommand;
 import me.dragon.coralClanPlugin.database.data.beans.ClanBean;
+import me.dragon.coralClanPlugin.database.data.beans.ClanMemberBean;
+import me.dragon.coralClanPlugin.database.data.dao.ClanMembersDao;
 import me.dragon.coralClanPlugin.database.data.dao.ClansDao;
+import me.dragon.coralClanPlugin.database.data.enums.Roles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
+
+import java.util.Optional;
 
 public class ClanCreateCommand implements ISubCommand {
 	@Override
-	public void execute(@NotNull final Player player, @NonNull @NotNull final String[] args,
+	public void execute(@NotNull final Player player, @NotNull final String[] args,
 		@NotNull final CoralClanPlugin plugin) {
 		final String clanName = args[1];
 		final String clanTag = args[2];
@@ -34,10 +38,12 @@ public class ClanCreateCommand implements ISubCommand {
 		Bukkit
 			.getScheduler()
 			.runTaskAsynchronously(plugin, () -> {
-				final ClansDao dao = new ClansDao(plugin.getDatabase());
-				final boolean exists = dao.readExists(bean);
+				final ClansDao clansDao = new ClansDao(plugin.getDatabase());
+				final ClanMembersDao clanMembersDao = new ClanMembersDao(plugin.getDatabase());
 
-				if (dao.isError()) {
+				final boolean exists = clansDao.readExists(bean);
+
+				if (clansDao.isError()) {
 					Bukkit
 						.getScheduler()
 						.runTask(plugin, () -> player.sendMessage(ChatColor.RED + "Errore interno"));
@@ -47,13 +53,39 @@ public class ClanCreateCommand implements ISubCommand {
 				if (exists) {
 					Bukkit
 						.getScheduler()
-						.runTask(plugin, () -> player.sendMessage(ChatColor.DARK_RED + "Esiste già un clan con questo " +
+						.runTask(plugin, () -> player.sendMessage(ChatColor.DARK_RED + "Esiste già un clan con " +
+							"questo" +
+							" " +
 							"nome/tag!"));
 					return;
 				}
 
-				dao.create(bean);
-				if (dao.isError()) {
+				clansDao.create(bean);
+				if (clansDao.isError()) {
+					Bukkit
+						.getScheduler()
+						.runTask(plugin, () -> player.sendMessage(ChatColor.RED + "Errore interno"));
+					return;
+				}
+
+				final Optional<ClanBean> clanBean = clansDao.read(ClanBean.fromName(bean.getName()));
+				if (clansDao.isError()) {
+					Bukkit
+						.getScheduler()
+						.runTask(plugin, () -> player.sendMessage(ChatColor.RED + "Errore interno"));
+					return;
+				}
+
+				clanMembersDao.create(
+					ClanMemberBean.of(
+						player.getUniqueId(),
+						Roles.LEADER,
+						clanBean
+							.get()
+							.getId()
+					)
+				);
+				if (clanMembersDao.isError()) {
 					Bukkit
 						.getScheduler()
 						.runTask(plugin, () -> player.sendMessage(ChatColor.RED + "Errore interno"));

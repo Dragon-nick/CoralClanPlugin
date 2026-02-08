@@ -10,10 +10,27 @@ public enum Query {
 		INSERT INTO clans (name, tag)
 		VALUES (?, ?)
 		"""),
+	READ_CLAN("""
+		SELECT id, name, tag
+		FROM clans
+		WHERE id = ? OR name = ? OR tag = ?
+		"""),
 	READ_CLAN_EXISTS("""
 		SELECT id, name, tag
 		FROM clans
 		WHERE name = ? OR tag = ?
+		"""),
+
+	/*** Clan Members **/
+	CREATE_CLAN_MEMBER("""
+		INSERT INTO clan_members (uuid, role, clan_id)
+		VALUES (?, ?, ?)
+		"""),
+	READ_CLAN_MEMBER("""
+		SELECT role, c.name, c.tag
+		FROM clan_members
+		RIGHT JOIN clan_mc.clans c on c.id = clan_members.clan_id
+		WHERE uuid = ?
 		""");
 
 	private final String queryString;
