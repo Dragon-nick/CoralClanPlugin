@@ -38,22 +38,31 @@ public class ClanCreateCommand implements ISubCommand {
 				final boolean exists = dao.readExists(bean);
 
 				if (dao.isError()) {
-					player.sendMessage(ChatColor.RED + "Errore interno");
+					Bukkit
+						.getScheduler()
+						.runTask(plugin, () -> player.sendMessage(ChatColor.RED + "Errore interno"));
 					return;
 				}
 
 				if (exists) {
-					player.sendMessage(ChatColor.DARK_RED + "Esiste già un clan con questo nome/tag!");
+					Bukkit
+						.getScheduler()
+						.runTask(plugin, () -> player.sendMessage(ChatColor.DARK_RED + "Esiste già un clan con questo " +
+							"nome/tag!"));
 					return;
 				}
 
 				dao.create(bean);
 				if (dao.isError()) {
-					player.sendMessage(ChatColor.RED + "Errore interno");
+					Bukkit
+						.getScheduler()
+						.runTask(plugin, () -> player.sendMessage(ChatColor.RED + "Errore interno"));
 					return;
 				}
 
-				player.sendMessage(ChatColor.GREEN + "Clan creato con successo!");
+				Bukkit
+					.getScheduler()
+					.runTask(plugin, () -> player.sendMessage(ChatColor.GREEN + "Clan creato con successo!"));
 			});
 	}
 }
