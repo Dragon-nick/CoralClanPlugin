@@ -1,5 +1,7 @@
 package me.dragon.coralClanPlugin;
 
+import lombok.Getter;
+import me.dragon.coralClanPlugin.commands.clan.ClanCommand;
 import me.dragon.coralClanPlugin.database.DatabaseManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -8,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 public final class CoralClanPlugin extends JavaPlugin {
+	@Getter
 	private final DatabaseManager database = new DatabaseManager();
 
 	@Override
@@ -15,6 +18,10 @@ public final class CoralClanPlugin extends JavaPlugin {
 		this.saveDefaultConfig();
 
 		this.connectDatabase();
+
+		Objects
+			.requireNonNull(this.getCommand("clan"))
+			.setExecutor(new ClanCommand(this));
 	}
 
 	@Override

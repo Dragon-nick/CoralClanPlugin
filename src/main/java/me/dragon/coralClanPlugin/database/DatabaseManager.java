@@ -2,9 +2,12 @@ package me.dragon.coralClanPlugin.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.Duration;
 
@@ -56,5 +59,26 @@ public final class DatabaseManager {
 		if (this.dataSource != null && this.dataSource.isRunning()) {
 			this.dataSource.close();
 		}
+	}
+
+	/**
+	 * Checks if a specified column exists in the given ResultSet object.
+	 *
+	 * @param resultSet  the ResultSet object to check
+	 * @param columnName the name of the column to check for
+	 * @return true if the column exists, false otherwise
+	 * @throws SQLException if an error accessing the ResultSet
+	 */
+	public static boolean columnNotExists(@NotNull final ResultSet resultSet, final @NonNls String columnName)
+		throws SQLException {
+		final ResultSetMetaData metadata = resultSet.getMetaData();
+		final int columns = metadata.getColumnCount();
+
+		for (int x = 1; x <= columns; x++) {
+			if (columnName.equals(metadata.getColumnName(x))) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
