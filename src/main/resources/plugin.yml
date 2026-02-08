@@ -1,0 +1,9 @@
+name: CoralClanPlugin
+author: Dragon-nick
+version: '1.0-SNAPSHOT'
+main: me.dragon.coralClanPlugin.CoralClanPlugin
+api-version: '1.21'
+depend:
+  - PlaceholderAPI
+  - WorldGuard
+  - WorldEdit
