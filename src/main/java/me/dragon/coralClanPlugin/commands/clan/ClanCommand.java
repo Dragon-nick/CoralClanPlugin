@@ -64,7 +64,22 @@ public class ClanCommand implements TabExecutor {
 		if (args.length == 2 && StringUtils.isEmpty(args[1])) {
 			switch (args[0]) {
 				case "create":
-					sender.sendMessage("/clan create <nome> <tag>");
+					sender.sendMessage("/clan create <nome> <tag> - Crea nuovo clan");
+					break;
+				case "invite":
+					sender.sendMessage("/clan invite <player> - Invita giocatore");
+					break;
+				case "kick":
+					sender.sendMessage("/clan kick <player> - Espelli membro");
+					break;
+				case "promote", "demote":
+					sender.sendMessage("/clan promote/demote <player> - Gestisci ruoli");
+					break;
+				case "chat":
+					sender.sendMessage("/clan chat <messaggio> - Chat clan");
+					break;
+				case "info":
+					sender.sendMessage("/clan info [clan] - Info clan");
 			}
 		}
 
