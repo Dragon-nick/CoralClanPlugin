@@ -9,11 +9,10 @@ import me.dragon.coralClanPlugin.database.data.enums.Roles;
 import me.dragon.coralClanPlugin.utils.AsyncUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
 
 public class ClanSetHomeCommand implements ISubCommand {
 	@Override
-	public void execute(@NotNull final Player player, @NonNull @NotNull final String[] args) {
+	public void execute(@NotNull final Player player, @NotNull final String[] args) {
 		final CoralClanPlugin instance = CoralClanPlugin.getInstance();
 		final ClanMemberBean bean = instance
 			.getClanMember()

@@ -30,6 +30,7 @@ public class ClanCommand implements TabExecutor {
 		this.subCommands.put("chat", new ClanChatCommand());
 		this.subCommands.put("claim", new ClanClaimCommand());
 		this.subCommands.put("unclaim", new ClanUnclaimCommand());
+		this.subCommands.put("home", new ClanHomeCommand());
 		this.subCommands.put("sethome", new ClanSetHomeCommand());
 		this.subCommands.put("info", new ClanInfoCommand());
 
