@@ -17,10 +17,12 @@ import java.util.Optional;
 public class ClanCreateCommand implements ISubCommand {
 	@Override
 	public void execute(@NotNull final Player player, @NotNull final String[] args) {
-		if (CoralClanPlugin
+		final ClanMemberBean clanMemberBean = CoralClanPlugin
 			.getInstance()
 			.getClanMember()
-			.get(player.getUniqueId())
+			.get(player.getUniqueId());
+
+		if (clanMemberBean != null && clanMemberBean
 			.getRole()
 			.equals(Roles.LEADER)) {
 			player.sendMessage("Sei già leader di un clan!");
@@ -90,11 +92,11 @@ public class ClanCreateCommand implements ISubCommand {
 
 			clanMembersDao
 				.read(ClanMemberBean.fromUUID(player.getUniqueId()))
-				.ifPresent(clanMemberBean -> {
+				.ifPresent(localBean -> {
 					CoralClanPlugin
 						.getInstance()
 						.getClanMember()
-						.put(player.getUniqueId(), clanMemberBean);
+						.put(player.getUniqueId(), localBean);
 				});
 
 			AsyncUtils.runTask(() -> player.sendMessage(ChatColor.GREEN + "Clan creato con successo!"));
