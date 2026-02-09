@@ -3,7 +3,13 @@ author: Dragon-nick
 version: '1.0-SNAPSHOT'
 main: me.dragon.coralClanPlugin.CoralClanPlugin
 api-version: '1.21'
+database: true
 depend:
-  - PlaceholderAPI
-  - WorldGuard
-  - WorldEdit
+    - PlaceholderAPI
+    - WorldGuard
+    - WorldEdit
+
+commands:
+    clan:
+        description: Clan management commands
+        usage: /clan <subcommand> [args]
