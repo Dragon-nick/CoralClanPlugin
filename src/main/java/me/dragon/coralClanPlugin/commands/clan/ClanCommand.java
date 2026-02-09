@@ -1,8 +1,8 @@
 package me.dragon.coralClanPlugin.commands.clan;
 
-import me.dragon.coralClanPlugin.CoralClanPlugin;
 import me.dragon.coralClanPlugin.commands.clan.subcommands.ClanCreateCommand;
 import me.dragon.coralClanPlugin.commands.clan.subcommands.ClanDisbandCommand;
+import me.dragon.coralClanPlugin.commands.clan.subcommands.ClanInviteCommand;
 import me.dragon.coralClanPlugin.commands.interfaces.ISubCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;
@@ -19,11 +19,6 @@ import java.util.Map;
 
 public class ClanCommand implements TabExecutor {
 	private final Map<String, ISubCommand> subCommands = new HashMap<>(Collections.emptyMap());
-	private CoralClanPlugin plugin = null;
-
-	public ClanCommand(@NotNull final CoralClanPlugin plugin) {
-		this.plugin = plugin;
-	}
 
 	@Override
 	public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command command,
@@ -34,7 +29,7 @@ public class ClanCommand implements TabExecutor {
 		if (sender instanceof final Player player && args.length != 0 && this.subCommands.containsKey(args[0])) {
 			this.subCommands
 				.get(args[0])
-				.execute(player, args, this.plugin);
+				.execute(player, args);
 
 			return true;
 		}

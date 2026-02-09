@@ -12,16 +12,20 @@ import java.util.Objects;
 public final class CoralClanPlugin extends JavaPlugin {
 	@Getter
 	private final DatabaseManager database = new DatabaseManager();
+	@Getter
+	private static CoralClanPlugin instance = null;
 
 	@Override
 	public void onEnable() {
+		instance = this;
+
 		this.saveDefaultConfig();
 
 		this.connectDatabase();
 
 		Objects
 			.requireNonNull(this.getCommand("clan"))
-			.setExecutor(new ClanCommand(this));
+			.setExecutor(new ClanCommand());
 	}
 
 	@Override

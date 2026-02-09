@@ -1,6 +1,5 @@
 package me.dragon.coralClanPlugin.database.data.dao;
 
-import me.dragon.coralClanPlugin.database.DatabaseManager;
 import me.dragon.coralClanPlugin.database.data.Query;
 import me.dragon.coralClanPlugin.database.data.beans.ClanBean;
 import me.dragon.coralClanPlugin.database.data.beans.ClanMemberBean;
@@ -15,10 +14,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class ClanMembersDao extends AbstractGenericDao<ClanMemberBean> {
-	public ClanMembersDao(final DatabaseManager databaseManager) {
-		super(databaseManager);
-	}
-
 	@Override
 	public void create(@NonNull final ClanMemberBean pBean) {
 		this.executeQuery(

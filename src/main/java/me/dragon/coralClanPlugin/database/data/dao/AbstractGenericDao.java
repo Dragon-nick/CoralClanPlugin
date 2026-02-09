@@ -2,6 +2,7 @@ package me.dragon.coralClanPlugin.database.data.dao;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.dragon.coralClanPlugin.CoralClanPlugin;
 import me.dragon.coralClanPlugin.database.DatabaseManager;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
@@ -33,8 +34,10 @@ public abstract class AbstractGenericDao<B> {
 	private final DatabaseManager databaseManager;
 	private boolean error;
 
-	protected AbstractGenericDao(final DatabaseManager databaseManager) {
-		this.databaseManager = databaseManager;
+	protected AbstractGenericDao() {
+		this.databaseManager = CoralClanPlugin
+			.getInstance()
+			.getDatabase();
 	}
 
 	protected static String getString(@NotNull final ResultSet pResultSet, @NotNull final String pColumnName) throws SQLException {
