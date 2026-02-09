@@ -16,4 +16,8 @@ public enum Roles {
 			return MEMBER;
 		}
 	}
+
+	public boolean isGreaterThan(@NotNull final Roles other) {
+		return this.ordinal() < other.ordinal();
+	}
 }
