@@ -36,6 +36,11 @@ public enum Query {
 		RIGHT JOIN clan_mc.clans c on c.id = clan_members.clan_id
 		WHERE uuid = ?
 		"""),
+	READ_CLAN_MEMER_LIST("""
+		SELECT uuid
+		FROM clan_members
+		WHERE clan_id = ?
+		"""),
 	UPDATE_CLAN_MEMBER("""
 		UPDATE clan_members
 		SET role = ?

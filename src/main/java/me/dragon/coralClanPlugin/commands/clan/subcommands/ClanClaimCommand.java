@@ -11,7 +11,9 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 import me.dragon.coralClanPlugin.CoralClanPlugin;
 import me.dragon.coralClanPlugin.commands.interfaces.ISubCommand;
 import me.dragon.coralClanPlugin.database.data.beans.ClanMemberBean;
+import me.dragon.coralClanPlugin.database.data.dao.ClanMembersDao;
 import me.dragon.coralClanPlugin.database.data.enums.Roles;
+import me.dragon.coralClanPlugin.utils.AsyncUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
@@ -100,14 +102,18 @@ public class ClanClaimCommand implements ISubCommand {
 
 		regionManager.addRegion(region);
 
-		CoralClanPlugin
-			.getInstance()
-			.getClanMember()
-			.keySet()
-			.forEach(uuid -> region
-				.getMembers()
-				.addPlayer(uuid));
-
-		player.sendMessage("Territorio reclamato con successo!");
+		final ClanMembersDao dao = new ClanMembersDao();
+		AsyncUtils.runAsync(() -> {
+			dao
+				.readList(bean
+					.getClanBean()
+					.getId())
+				.forEach(clanMemberBean -> {
+					region
+						.getMembers()
+						.addPlayer(clanMemberBean.getUuid());
+				});
+			AsyncUtils.runTask(() -> player.sendMessage("Territorio reclamato con successo!"));
+		});
 	}
 }

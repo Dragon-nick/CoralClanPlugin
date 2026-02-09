@@ -11,6 +11,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,6 +31,10 @@ public class ClanMembersDao extends AbstractGenericDao<ClanMemberBean> {
 	@Override
 	public Optional<ClanMemberBean> read(@NonNull final ClanMemberBean pBean) {
 		return this.executeReadQuerySingle(Query.READ_CLAN_MEMBER.getQueryString(), pBean.getUuid());
+	}
+
+	public List<ClanMemberBean> readList(final int clanId) {
+		return this.executeReadQueryList(Query.READ_CLAN_MEMER_LIST.getQueryString(), clanId);
 	}
 
 	@Override
