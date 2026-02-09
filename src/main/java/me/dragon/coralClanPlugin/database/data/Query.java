@@ -31,9 +31,14 @@ public enum Query {
 		VALUES (?, ?, ?)
 		"""),
 	READ_CLAN_MEMBER("""
-		SELECT role, c.id, c.name, c.tag
+		SELECT uuid, role, c.id, c.name, c.tag
 		FROM clan_members
 		RIGHT JOIN clan_mc.clans c on c.id = clan_members.clan_id
+		WHERE uuid = ?
+		"""),
+	UPDATE_CLAN_MEMBER("""
+		UPDATE clan_members
+		SET role = ?
 		WHERE uuid = ?
 		"""),
 	DELETE_CLAN_MEMBER("""

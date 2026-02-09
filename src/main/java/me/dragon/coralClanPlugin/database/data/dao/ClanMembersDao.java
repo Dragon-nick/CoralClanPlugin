@@ -12,6 +12,7 @@ import org.jspecify.annotations.Nullable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.UUID;
 
 public class ClanMembersDao extends AbstractGenericDao<ClanMemberBean> {
 	@Override
@@ -32,6 +33,11 @@ public class ClanMembersDao extends AbstractGenericDao<ClanMemberBean> {
 	}
 
 	@Override
+	public void update(@NonNull final ClanMemberBean pBean) {
+		this.executeQuery(Query.UPDATE_CLAN_MEMBER.getQueryString(), pBean.getRole(), pBean.getUuid());
+	}
+
+	@Override
 	public void delete(@NonNull final ClanMemberBean pBean) {
 		this.executeQuery(Query.DELETE_CLAN_MEMBER.getQueryString(), pBean.getUuid());
 	}
@@ -41,6 +47,7 @@ public class ClanMembersDao extends AbstractGenericDao<ClanMemberBean> {
 		final ClanMemberBean bean = new ClanMemberBean();
 
 		try {
+			bean.setUuid(UUID.fromString(getString(pResultSet, "uuid")));
 			bean.setRole(Roles.convert(getString(pResultSet, "role")));
 
 			final ClanBean clanBean = new ClanBean();

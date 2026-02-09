@@ -1,9 +1,6 @@
 package me.dragon.coralClanPlugin.commands.clan;
 
-import me.dragon.coralClanPlugin.commands.clan.subcommands.ClanCreateCommand;
-import me.dragon.coralClanPlugin.commands.clan.subcommands.ClanDisbandCommand;
-import me.dragon.coralClanPlugin.commands.clan.subcommands.ClanInviteCommand;
-import me.dragon.coralClanPlugin.commands.clan.subcommands.ClanKickCommand;
+import me.dragon.coralClanPlugin.commands.clan.subcommands.*;
 import me.dragon.coralClanPlugin.commands.interfaces.ISubCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;
@@ -28,6 +25,7 @@ public class ClanCommand implements TabExecutor {
 		this.subCommands.put("disband", new ClanDisbandCommand());
 		this.subCommands.put("invite", new ClanInviteCommand());
 		this.subCommands.put("kick", new ClanKickCommand());
+		this.subCommands.put("promote", new ClanPromoteCommand());
 
 		if (sender instanceof final Player player && args.length != 0 && this.subCommands.containsKey(args[0])) {
 			this.subCommands
