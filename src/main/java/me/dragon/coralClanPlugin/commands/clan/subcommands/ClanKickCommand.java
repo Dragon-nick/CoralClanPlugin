@@ -1,5 +1,9 @@
 package me.dragon.coralClanPlugin.commands.clan.subcommands;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import me.dragon.coralClanPlugin.CoralClanPlugin;
 import me.dragon.coralClanPlugin.commands.interfaces.ISubCommand;
 import me.dragon.coralClanPlugin.database.data.beans.ClanMemberBean;
@@ -60,6 +64,33 @@ public class ClanKickCommand implements ISubCommand {
 					AsyncUtils.runTask(() -> player.sendMessage("Errore interno"));
 					return;
 				}
+				final WorldGuard worldGuard = WorldGuard.getInstance();
+				final RegionContainer container = worldGuard
+					.getPlatform()
+					.getRegionContainer();
+
+				final RegionManager regionManager = container.get(BukkitAdapter.adapt(player.getWorld()));
+				if (regionManager == null) {
+					player.sendMessage("Errore interno nel dare l'accesso ai territori");
+					return;
+				}
+
+				regionManager
+					.getRegions()
+					.entrySet()
+					.stream()
+					.filter(e -> e
+						.getKey()
+						.startsWith("clan_" + kickedPlayerBean
+							.getClanBean()
+							.getId()))
+					.forEach(e -> {
+						e
+							.getValue()
+							.getMembers()
+							.removePlayer(player.getUniqueId());
+					});
+
 				AsyncUtils.runTask(() -> player.sendMessage("Player rimosso con successo!"));
 			});
 		}
