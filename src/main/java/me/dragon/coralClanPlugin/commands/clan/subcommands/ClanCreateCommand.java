@@ -1,5 +1,6 @@
 package me.dragon.coralClanPlugin.commands.clan.subcommands;
 
+import me.dragon.coralClanPlugin.CoralClanPlugin;
 import me.dragon.coralClanPlugin.commands.interfaces.ISubCommand;
 import me.dragon.coralClanPlugin.database.data.beans.ClanBean;
 import me.dragon.coralClanPlugin.database.data.beans.ClanMemberBean;
@@ -77,6 +78,15 @@ public class ClanCreateCommand implements ISubCommand {
 				AsyncUtils.runTask(() -> player.sendMessage(ChatColor.RED + "Errore interno"));
 				return;
 			}
+
+			clanMembersDao
+				.read(ClanMemberBean.fromUUID(player.getUniqueId()))
+				.ifPresent(clanMemberBean -> {
+					CoralClanPlugin
+						.getInstance()
+						.getClanMember()
+						.put(player.getUniqueId(), clanMemberBean);
+				});
 
 			AsyncUtils.runTask(() -> player.sendMessage(ChatColor.GREEN + "Clan creato con successo!"));
 		});

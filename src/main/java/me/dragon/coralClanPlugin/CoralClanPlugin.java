@@ -3,17 +3,24 @@ package me.dragon.coralClanPlugin;
 import lombok.Getter;
 import me.dragon.coralClanPlugin.commands.clan.ClanCommand;
 import me.dragon.coralClanPlugin.database.DatabaseManager;
+import me.dragon.coralClanPlugin.database.data.beans.ClanMemberBean;
+import me.dragon.coralClanPlugin.listeners.player.PlayerJoinListener;
+import me.dragon.coralClanPlugin.placeholder.ClanPlaceholders;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
+import java.util.*;
 
 public final class CoralClanPlugin extends JavaPlugin {
 	@Getter
 	private final DatabaseManager database = new DatabaseManager();
+
 	@Getter
 	private static CoralClanPlugin instance = null;
+
+	@Getter
+	private final Map<UUID, ClanMemberBean> clanMember = new HashMap<>(Collections.emptyMap());
 
 	@Override
 	public void onEnable() {
@@ -23,6 +30,13 @@ public final class CoralClanPlugin extends JavaPlugin {
 
 		this.connectDatabase();
 
+		this.registerPlaceholders();
+
+		this
+			.getServer()
+			.getPluginManager()
+			.registerEvents(new PlayerJoinListener(), this);
+
 		Objects
 			.requireNonNull(this.getCommand("clan"))
 			.setExecutor(new ClanCommand());
@@ -31,6 +45,21 @@ public final class CoralClanPlugin extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		this.database.disconnect();
+	}
+
+	private void registerPlaceholders() {
+		if (Bukkit
+			.getPluginManager()
+			.isPluginEnabled("PlaceholderAPI")) {
+			new ClanPlaceholders().register();
+		} else {
+			this
+				.getLogger()
+				.warning("Could not find PlaceholderAPI! This plugin is required.");
+			Bukkit
+				.getPluginManager()
+				.disablePlugin(this);
+		}
 	}
 
 	private void connectDatabase() {

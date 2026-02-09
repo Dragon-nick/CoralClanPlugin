@@ -25,6 +25,7 @@ public class ClanCommand implements TabExecutor {
 		@NotNull final String label, @NotNull final String[] args) {
 		this.subCommands.put("create", new ClanCreateCommand());
 		this.subCommands.put("disband", new ClanDisbandCommand());
+		this.subCommands.put("invite", new ClanInviteCommand());
 
 		if (sender instanceof final Player player && args.length != 0 && this.subCommands.containsKey(args[0])) {
 			this.subCommands
