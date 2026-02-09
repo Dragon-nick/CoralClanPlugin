@@ -33,7 +33,7 @@ public class ClanMembersDao extends AbstractGenericDao<ClanMemberBean> {
 
 	@Override
 	public void delete(@NonNull final ClanMemberBean pBean) {
-		super.delete(pBean);
+		this.executeQuery(Query.DELETE_CLAN_MEMBER.getQueryString(), pBean.getUuid());
 	}
 
 	@Override

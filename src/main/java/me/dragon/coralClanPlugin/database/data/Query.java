@@ -35,6 +35,10 @@ public enum Query {
 		FROM clan_members
 		RIGHT JOIN clan_mc.clans c on c.id = clan_members.clan_id
 		WHERE uuid = ?
+		"""),
+	DELETE_CLAN_MEMBER("""
+		DELETE FROM clan_members
+		WHERE uuid = ?
 		""");
 
 	private final String queryString;
