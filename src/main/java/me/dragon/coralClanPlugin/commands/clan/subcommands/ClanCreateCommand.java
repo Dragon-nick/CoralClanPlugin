@@ -17,6 +17,15 @@ import java.util.Optional;
 public class ClanCreateCommand implements ISubCommand {
 	@Override
 	public void execute(@NotNull final Player player, @NotNull final String[] args) {
+		if (CoralClanPlugin
+			.getInstance()
+			.getClanMember()
+			.get(player.getUniqueId())
+			.getRole()
+			.equals(Roles.LEADER)) {
+			player.sendMessage("Sei già leader di un clan!");
+		}
+
 		final String clanName = args[1];
 		final String clanTag = args[2];
 
