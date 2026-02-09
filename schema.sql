@@ -21,3 +21,16 @@ CREATE TABLE `clan_members`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
+
+DROP TABLE IF EXISTS `clan_home`;
+CREATE TABLE `clan_home`
+(
+	`x`       INT NOT NULL,
+	`y`       INT NOT NULL,
+	`z`       INT NOT NULL,
+	`clan_id` INT NOT NULL,
+	PRIMARY KEY (`clan_id`),
+	FOREIGN KEY (`clan_id`) REFERENCES clans (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;

@@ -7,6 +7,7 @@ import me.dragon.coralClanPlugin.database.data.beans.ClanMemberBean;
 import me.dragon.coralClanPlugin.listeners.player.PlayerJoinListener;
 import me.dragon.coralClanPlugin.placeholder.ClanPlaceholders;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +22,8 @@ public final class CoralClanPlugin extends JavaPlugin {
 
 	@Getter
 	private final Map<UUID, ClanMemberBean> clanMember = new HashMap<>(Collections.emptyMap());
+	@Getter
+	private final Map<Integer, Location> clanHomes = new HashMap<>(Collections.emptyMap());
 
 	@Override
 	public void onEnable() {

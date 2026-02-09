@@ -49,6 +49,22 @@ public enum Query {
 	DELETE_CLAN_MEMBER("""
 		DELETE FROM clan_members
 		WHERE uuid = ?
+		"""),
+
+	/*** Clan Homes **/
+	CREATE_CLAN_HOME("""
+		INSERT INTO clan_home (x, y, z, clan_id)
+		VALUES (?, ?, ?, ?)
+		"""),
+	READ_CLAN_HOME("""
+		SELECT x, y, z, clan_id
+		FROM clan_home
+		WHERE clan_id = ?
+		"""),
+	UPDATE_CLAN_HOME("""
+		UPDATE clan_home
+		SET x = ?, y = ?, z = ?
+		WHERE clan_id = ?
 		""");
 
 	private final String queryString;

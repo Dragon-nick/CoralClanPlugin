@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 public abstract class AbstractGenericDao<B> {
 	private static final Logger LOGGER = Bukkit.getLogger();
 	private static int DEFAULT_INTEGER = 0;
+	private static double DEFAULT_DOUBLE = 0.0;
 	private static final String NOT_AVAILABLE = "Not available";
 	private static final String UNIMPLEMENTED = "Unimplemented";
 
@@ -50,6 +51,12 @@ public abstract class AbstractGenericDao<B> {
 		return DatabaseManager.columnNotExists(pResultSet, pColumnName) ?
 			DEFAULT_INTEGER:
 			pResultSet.getInt(pColumnName);
+	}
+
+	protected static double getDouble(@NotNull final ResultSet pResultSet, @NotNull final String pColumnName) throws SQLException {
+		return DatabaseManager.columnNotExists(pResultSet, pColumnName) ?
+			DEFAULT_DOUBLE:
+			pResultSet.getDouble(pColumnName);
 	}
 
 	protected static void setParametersOnStatement(

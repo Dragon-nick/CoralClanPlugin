@@ -14,7 +14,7 @@ import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ClainUnclaimCommand implements ISubCommand {
+public class ClanUnclaimCommand implements ISubCommand {
 	public void execute(@NotNull final Player player, @NotNull final String[] args) {
 		final ClanMemberBean bean = CoralClanPlugin
 			.getInstance()
