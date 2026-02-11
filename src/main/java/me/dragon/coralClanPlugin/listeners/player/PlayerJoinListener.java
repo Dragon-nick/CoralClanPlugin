@@ -22,19 +22,24 @@ public class PlayerJoinListener implements Listener {
 			.getPlayer()
 			.getUniqueId()));
 
-		clanMemberBean.ifPresent(localBean -> {
-			instance
-				.getClanMember()
-				.put(localBean.getUuid(), localBean);
-		});
+		clanMemberBean.ifPresent(localBean -> instance
+			.getClanMember()
+			.put(localBean.getUuid(), localBean));
 
-		final int clanId = instance
+		final ClanMemberBean memberBean = instance
 			.getClanMember()
 			.get(event
 				.getPlayer()
-				.getUniqueId())
-			.getClanBean()
-			.getId();
+				.getUniqueId());
+
+		if (memberBean == null) {
+			return;
+		}
+
+		final int clanId =
+			memberBean
+				.getClanBean()
+				.getId();
 
 		if (instance
 			.getClanHomes()
@@ -43,11 +48,9 @@ public class PlayerJoinListener implements Listener {
 			final Optional<ClanHomeBean> clanHomeBean =
 				homeDao.read(ClanHomeBean.fromClanId(clanId));
 
-			clanHomeBean.ifPresent(localBean -> {
-				instance
-					.getClanHomes()
-					.put(clanId, localBean.getLocation());
-			});
+			clanHomeBean.ifPresent(localBean -> instance
+				.getClanHomes()
+				.put(clanId, localBean.getLocation()));
 		}
 	}
 }
