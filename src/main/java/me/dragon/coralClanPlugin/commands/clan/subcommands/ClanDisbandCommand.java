@@ -10,14 +10,13 @@ import me.dragon.coralClanPlugin.utils.AsyncUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 import java.util.UUID;
 
 public class ClanDisbandCommand implements ISubCommand {
 	@Override
-	public void execute(@NotNull final Player player, @NonNull @NotNull final String[] args) {
+	public void execute(@NotNull final Player player, @NotNull final String[] args) {
 		final ClansDao clansDao = new ClansDao();
 
 		AsyncUtils.runAsync(() -> {

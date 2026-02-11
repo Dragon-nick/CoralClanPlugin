@@ -9,11 +9,10 @@ import me.dragon.coralClanPlugin.utils.AsyncUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
 
 public class ClanInfoCommand implements ISubCommand {
 	@Override
-	public void execute(@NotNull final Player player, @NonNull @NotNull final String[] args) {
+	public void execute(@NotNull final Player player, @NotNull final String[] args) {
 		if (args.length == 1) {
 			final String message = new StringBuilder(StringUtils.EMPTY)
 				.append("[")
