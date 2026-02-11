@@ -11,7 +11,10 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class CoralClanPlugin extends JavaPlugin {
 	@Getter
@@ -21,9 +24,9 @@ public final class CoralClanPlugin extends JavaPlugin {
 	private static CoralClanPlugin instance = null;
 
 	@Getter
-	private final Map<UUID, ClanMemberBean> clanMember = new HashMap<>(Collections.emptyMap());
+	private final ConcurrentHashMap<UUID, ClanMemberBean> clanMember = new ConcurrentHashMap<>(Collections.emptyMap());
 	@Getter
-	private final Map<Integer, Location> clanHomes = new HashMap<>(Collections.emptyMap());
+	private final ConcurrentHashMap<Integer, Location> clanHomes = new ConcurrentHashMap<>(Collections.emptyMap());
 
 	@Override
 	public void onEnable() {

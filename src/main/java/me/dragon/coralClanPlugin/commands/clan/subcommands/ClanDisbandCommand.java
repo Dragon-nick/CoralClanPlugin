@@ -21,8 +21,9 @@ public class ClanDisbandCommand implements ISubCommand {
 		final ClansDao clansDao = new ClansDao();
 
 		AsyncUtils.runAsync(() -> {
-			final Map<UUID, ClanMemberBean> clanMember = CoralClanPlugin
-				.getInstance()
+			final CoralClanPlugin instance = CoralClanPlugin.getInstance();
+
+			final Map<UUID, ClanMemberBean> clanMember = instance
 				.getClanMember();
 			final ClanMemberBean clanMemberBean = clanMember.get(player.getUniqueId());
 
@@ -57,6 +58,11 @@ public class ClanDisbandCommand implements ISubCommand {
 					return clanId != null && clanId == id;
 				});
 
+			instance
+				.getClanHomes()
+				.remove(clanMemberBean
+					.getClanBean()
+					.getId());
 			AsyncUtils.runTask(() -> player.sendMessage(ChatColor.GREEN + "Clan cancellato con successo!"));
 		});
 	}
